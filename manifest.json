@@ -1,0 +1,15 @@
+{
+  "name": "Гонкарески",
+  "short_name": "Гонкарески",
+  "description": "Официальное приложение гоночной команды Гонкарески",
+  "lang": "ru-RU",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#0867d8",
+  "orientation": "portrait",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

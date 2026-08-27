@@ -1,10 +1,1 @@
-const CACHE="gonkareski-v1";
-const ASSETS=["./","./index.html","./style.css","./script.js","./manifest.json","./icon.svg"];
-self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
-self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
-self.addEventListener("fetch",e=>{
-  if(e.request.method!=="GET") return;
-  e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{
-    const copy=r.clone(); caches.open(CACHE).then(c=>c.put(e.request,copy)); return r;
-  }).catch(()=>caches.match("./index.html"))));
-});
+const C='gonkareski-v12';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html','./style.css','./script.js','./manifest.json','./images/logo.jpg','./images/pilot-1.jpg','./images/pilot-2.jpg','./images/car.jpg']))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));

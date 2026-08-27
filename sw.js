@@ -1,1 +1,33 @@
-const C='gonkareski-v12';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html','./style.css','./script.js','./manifest.json','./images/logo.jpg','./images/pilot-1.jpg','./images/pilot-2.jpg','./images/car.jpg']))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+const CACHE_NAME = 'gonkareski-v13';
+
+self.addEventListener('install', event => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        if (event.request.method === 'GET') {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copy);
+          });
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
+  );
+});
